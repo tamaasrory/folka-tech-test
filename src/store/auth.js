@@ -32,6 +32,8 @@ export default {
             console.log(response)
             const token = response.data.data.token
             localStorage.setItem('token', token)
+            localStorage.setItem('user', JSON.stringify(response.data.data))
+            localStorage.setItem('isLoggedIn', true)
             setHeaderToken(token)
             commit('set_user', response.data.data)
             resolve(response)
@@ -39,6 +41,8 @@ export default {
           .catch(err => {
             commit('reset_user')
             localStorage.removeItem('token')
+            localStorage.removeItem('user')
+            localStorage.removeItem('isLoggedIn')
             reject(err)
           })
       })
@@ -59,6 +63,8 @@ export default {
       return new Promise((resolve) => {
         commit('reset_user')
         localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        localStorage.removeItem('isLoggedIn')
         removeHeaderToken()
         resolve()
       })

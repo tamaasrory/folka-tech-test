@@ -10,12 +10,14 @@ import { setHeaderToken } from './utils/auth'
 Vue.config.productionTip = false
 axios.defaults.baseURL = 'https://techtest.folkatech.com/api/'
 
-Vue.config.productionTip = false
-
 const token = localStorage.getItem('token')
+const user = localStorage.getItem('user')
 
 if (token) {
   setHeaderToken(token)
+}
+if (user) {
+  store.commit('set_user', JSON.parse(user))
 }
 
 new Vue({
