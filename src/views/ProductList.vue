@@ -117,10 +117,7 @@
         </div>
         <div class="row mx-0 px-0">
           <div v-for="(v, i) in datas" :key="i" class="col-md-4 px-0 product">
-            <div
-              class="card card-items card-click-able"
-              @click="showDetail(v)"
-            >
+            <div class="card card-items card-click-able" @click="showDetail(v)">
               <img
                 class="card-img-top"
                 :src="v.images[0].image_url"
@@ -160,13 +157,13 @@
         <div class="text-center pagination-container">
           <div class="btn-group" role="group">
             <button type="button" class="btn btn-secondary">
-              <img :src="require('../assets/chevron-left.svg')" alt="">
+              <img :src="require('../assets/chevron-left.svg')" alt="" />
             </button>
             <button type="button" class="btn btn-secondary">1</button>
             <button type="button" class="btn btn-secondary">2</button>
             <button type="button" class="btn btn-secondary">3</button>
             <button type="button" class="btn btn-secondary">
-              <img :src="require('../assets/chevron-right.svg')" alt="">
+              <img :src="require('../assets/chevron-right.svg')" alt="" />
             </button>
           </div>
         </div>
@@ -177,7 +174,7 @@
 <script>
 import Navbar from '../components/Navbar.vue'
 import Rating from '../components/Rating.vue'
-import axios from 'axios'
+// import axios from 'axios'
 
 export default {
   name: 'ProductList',
@@ -267,11 +264,10 @@ export default {
     },
     loadData () {
       const query = new URLSearchParams(this.filter).toString()
-      axios
-        .get(`https://api.lakkon.id/api/v1/products?${query}`)
+      fetch(`https://api.lakkon.id/api/v1/products?${query}`)
+        .then((response) => response.json())
         .then((response) => {
-          this.datas = response.data.data
-          console.log(response)
+          this.datas = response.data
         })
     },
     rupiah (number) {
@@ -282,7 +278,10 @@ export default {
       }).format(number)
     },
     showDetail (data) {
-      this.$router.push({ name: 'DetailProduct', params: { slug: data.slug, detail: data } })
+      this.$router.push({
+        name: 'DetailProduct',
+        params: { slug: data.slug, detail: data }
+      })
     }
   }
 }

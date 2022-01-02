@@ -43,20 +43,6 @@ export default {
           })
       })
     },
-    async get_user ({ commit }) {
-      if (!localStorage.getItem('token')) {
-        return
-      }
-      try {
-        const response = await axios.get('user')
-        commit('set_user', response.data.data)
-      } catch (error) {
-        commit('reset_user')
-        removeHeaderToken()
-        localStorage.removeItem('token')
-        return error
-      }
-    },
     register ({ commit }, data) {
       return new Promise((resolve, reject) => {
         axios.post('register', data)

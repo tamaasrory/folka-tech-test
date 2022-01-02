@@ -14,14 +14,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto align-items-center">
-          <template v-if="isLoggedIn">
-            <li class="nav-item">
-              <router-link class="nav-link" to="/profile">
-                {{ user.name }}
-              </router-link>
-            </li>
-          </template>
-          <template v-else>
+          <template>
             <li class="nav-item">
               <div class="input-group" style="width: 436px; margin: 0 12.5px">
                 <input

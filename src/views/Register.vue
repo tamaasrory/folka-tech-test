@@ -78,7 +78,7 @@
                     placeholder="Nomor Telepon"
                   />
                 </div>
-                <div class="input-group">
+                <div class="input-group mb-25px">
                   <input
                     v-model="form.password"
                     :type="password.show1 ? 'text' : 'password'"
@@ -95,7 +95,7 @@
                     </button>
                   </div>
                 </div>
-                <div class="input-group">
+                <div class="input-group mb-25px">
                   <input
                     v-model="form.confirm_password"
                     :type="password.show2 ? 'text' : 'password'"
@@ -113,7 +113,7 @@
                   </div>
                 </div>
                 <button
-                  type="button"
+                  type="submit"
                   class="btn btn-primary"
                   style="margin-top: 21px"
                 >
@@ -153,6 +153,7 @@ export default {
   },
   methods: {
     register: function () {
+      this.form.name = this.form.nama_depan + ' ' + this.form.nama_belakang
       this.$store
         .dispatch('register', this.form)
         .then((response) => {

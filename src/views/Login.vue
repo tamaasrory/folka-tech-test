@@ -46,18 +46,18 @@
                   </button>
                 </div>
               </div>
-            </form>
-            <router-link class="anchor text-lupa-password" to="/register"
-              >Lupa Password ?</router-link
-            >
-            <button type="submit" class="btn btn-primary">masuk</button>
-            <div class="divider" style="margin: 39px 37px" />
-            <div style="text-align: center">
-              <span class="text">Belum punya akun?&nbsp;</span>
-              <router-link class="anchor" to="/register"
-                >Daftar Sekarang</router-link
+              <router-link class="anchor text-lupa-password" to="/register"
+                >Lupa Password ?</router-link
               >
-            </div>
+              <button type="submit" class="btn btn-primary">masuk</button>
+              <div class="divider" style="margin: 39px 37px" />
+              <div style="text-align: center">
+                <span class="text">Belum punya akun?&nbsp;</span>
+                <router-link class="anchor" to="/register"
+                  >Daftar Sekarang</router-link
+                >
+              </div>
+            </form>
           </div>
         </div>
       </div>
