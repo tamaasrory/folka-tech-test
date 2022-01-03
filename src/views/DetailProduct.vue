@@ -19,7 +19,7 @@
         <div
           style="
             background: rgba(255, 255, 255, 0.75);
-            border: 1px solid #d8d8d8;
+            border: 1px solid #D8D8D8;
             box-sizing: border-box;
           "
           class="justify-content-center d-flex"
