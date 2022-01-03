@@ -9,51 +9,66 @@
             class="breadcrumb-item breadcrumb-symbol active"
             aria-current="page"
           >
-            {{ detail.name }}
+            {{ product.name }}
           </li>
         </ol>
       </nav>
     </div>
     <div class="row" style="margin: 0px 70px">
       <div class="col-md-6">
-        <div style="background: rgba(255, 255, 255, 0.75);
-border: 1px solid #D8D8D8;
-box-sizing: border-box;" class="justify-content-center d-flex">
+        <div
+          style="
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid #d8d8d8;
+            box-sizing: border-box;
+          "
+          class="justify-content-center d-flex"
+        >
           <img :src="currentImage" alt="" height="500px" />
         </div>
         <div class="mt-4">
           <ul class="detail-images-box">
-            <li class="detail-images-item" v-for="(v, i) in detail.images" :key="i">
-              <img :src="v.image_url" alt="" height="170px" width="170px" @click="currentImage=v.image_url" />
+            <li
+              class="detail-images-item"
+              v-for="(v, i) in product.images"
+              :key="i"
+            >
+              <img
+                :src="v.image_url"
+                alt=""
+                height="170px"
+                width="170px"
+                @click="currentImage = v.image_url"
+              />
             </li>
           </ul>
         </div>
       </div>
       <div class="col-md-6">
-        <h4 class="detail-header">{{ detail.name }}</h4>
-        <div class="detail-store-name">{{ detail.seller.store_name }}</div>
+        <h4 class="detail-header">{{ product.name }}</h4>
+        <div class="detail-store-name">{{ product.seller.store_name }}</div>
         <div style="margin-bottom: 20px" class="d-flex align-items-center">
           <Rating :grade="5" :maxStars="5" />
           <span class="fs-16px pl-2">(7)</span>
         </div>
         <div class="detail-price" style="margin-bottom: 30px">
-          {{ rupiah(detail.price) }}
+          {{ rupiah(product.price) }}
         </div>
         <div class="row">
           <div class="col-md-4">
             <div class="input-group detail-input-group">
               <div class="input-group-prepend">
-                <button type="button" class="btn">
+                <button type="button" class="btn" @click="qty = qty - 1">
                   <img :src="require('../assets/minus.svg')" alt="" />
                 </button>
               </div>
               <input
+                v-model="qty"
                 type="text"
                 class="form-control text-center detail-qty"
-                value="1"
               />
               <div class="input-group-append">
-                <button type="button" class="btn">
+                <button type="button" class="btn" @click="qty = qty + 1">
                   <img :src="require('../assets/plus-add.svg')" alt="" />
                 </button>
               </div>
@@ -71,7 +86,7 @@ box-sizing: border-box;" class="justify-content-center d-flex">
           </div>
         </div>
         <div class="detail-short-des">
-          {{ detail.short_description }}
+          {{ product.short_description }}
         </div>
       </div>
     </div>
@@ -95,10 +110,10 @@ box-sizing: border-box;" class="justify-content-center d-flex">
       class="detail-description"
       style="margin: 10px 70px 10px 70px; padding: 20px"
     >
-      <div v-show="active_tab === 1">{{ detail.description }}</div>
+      <div v-show="active_tab === 1">{{ product.description }}</div>
       <div v-show="active_tab === 2">
         {{
-          detail.information
+          product.information
             .map((v) => {
               return v.name + " : " + v.value;
             })
@@ -113,9 +128,7 @@ box-sizing: border-box;" class="justify-content-center d-flex">
     <div style="margin-left: 75px; margin-right: 75px">
       <div class="row mx-0 px-0">
         <div v-for="(v, i) in datas" :key="i" class="col-md-4 px-0 product">
-          <div
-            class="card card-items-lg card-click-able"
-          >
+          <div class="card card-items-lg card-click-able">
             <img
               class="card-img-top mx-auto"
               :src="v.images[0].image_url"
@@ -158,11 +171,11 @@ box-sizing: border-box;" class="justify-content-center d-flex">
 <script>
 import Navbar from '../components/Navbar.vue'
 import Rating from '../components/Rating.vue'
+import { mapState } from 'vuex'
 
 export default {
   props: {
-    slug: { required: true, type: [String] },
-    detail: { required: true, type: [Object] }
+    slug: { required: true, type: [String] }
   },
   components: {
     Navbar,
@@ -172,12 +185,22 @@ export default {
     return {
       active_tab: 1,
       datas: [],
+      qty: 1,
       currentImage: ''
     }
   },
+  computed: {
+    ...mapState(['product'])
+  },
   mounted () {
     this.loadRecom()
-    this.currentImage = this.detail.images[0].image_url
+    if (!Object.keys(this.product).length) {
+      this.$store.commit(
+        'set_product',
+        JSON.parse(localStorage.getItem('product'))
+      )
+    }
+    this.currentImage = this.product.images[0].image_url
   },
   methods: {
     rupiah (number) {

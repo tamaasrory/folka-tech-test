@@ -314,9 +314,11 @@ export default {
       }).format(number)
     },
     showDetail (data) {
+      this.$store.commit('set_product', data)
+      localStorage.setItem('product', JSON.stringify(data))
       this.$router.push({
         name: 'DetailProduct',
-        params: { slug: data.slug, detail: data }
+        params: { slug: data.slug }
       })
     }
   }

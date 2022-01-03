@@ -7,8 +7,17 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    product: {}
+  },
+  getters: {
+    get_product (state) {
+      return state.product
+    }
   },
   mutations: {
+    set_product (state, data) {
+      state.product = data
+    }
   },
   actions: {
     load_data ({ dispatch, commit }, data) {
