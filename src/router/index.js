@@ -54,9 +54,11 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
+  scrollBehavior () {
+    document.getElementById('app').scrollIntoView()
+  }
 })
 
 router.beforeEach((to, from, next) => {
