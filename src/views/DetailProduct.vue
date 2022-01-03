@@ -115,7 +115,6 @@ box-sizing: border-box;" class="justify-content-center d-flex">
         <div v-for="(v, i) in datas" :key="i" class="col-md-4 px-0 product">
           <div
             class="card card-items-lg card-click-able"
-            @click="showDetail(v)"
           >
             <img
               class="card-img-top mx-auto"
