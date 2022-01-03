@@ -31,6 +31,19 @@ const routes = [
     }
   },
   {
+    path: '/',
+    name: 'Home',
+    component: () => import('../views/Home.vue'),
+    meta: {
+      guest: true
+    }
+  },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: () => import('../views/Home.vue')
+  },
+  {
     path: '/register',
     name: 'Register',
     component: () => import('../views/Register.vue'),
@@ -60,7 +73,7 @@ router.beforeEach((to, from, next) => {
       next()
       return
     }
-    next('/product-list')
+    next('/')
   }
 
   next()

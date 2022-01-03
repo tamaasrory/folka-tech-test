@@ -533,3 +533,10 @@ select {
   background: #eb3f36;
   border-radius: 9px;
 }
+.nav-item.dropdown:hover > .dropdown-menu,
+.dropdown-menu:hover {
+  display: block !important;
+}
+.dropdown-item {
+  font-family: Arial, Helvetica, sans-serif !important;
+}

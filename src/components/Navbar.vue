@@ -47,18 +47,12 @@
               <a
                 class="nav-link nav-link-header dropdown-toggle"
                 href="#"
-                id="navbarDropdown"
-                role="button"
                 data-toggle="dropdown"
-                aria-expanded="false"
               >
                 <img :src="require('../assets/user.svg')" alt="" />
               </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
+              <div class="dropdown-menu dropdown-menu-md-right">
+                <a href="#" class="dropdown-item" @click="_logout">Logout</a>
               </div>
             </li>
           </template>
@@ -82,10 +76,22 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
+  data () {
+    return {
+      showDropdown: false
+    }
+  },
   computed: {
     ...mapGetters(['isLoggedIn', 'user'])
+  },
+  methods: {
+    ...mapActions(['logout']),
+    _logout () {
+      this.logout()
+      this.$router.push({ name: 'Home' })
+    }
   }
 }
 </script>
