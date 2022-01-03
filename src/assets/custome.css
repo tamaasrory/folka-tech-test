@@ -137,7 +137,8 @@ a {
   padding: 42px 34px !important;
   border: none !important;
 }
-.card-items {
+.card-items,
+.card-items-lg {
   background: #ffffff;
   border: 1px solid #ececec;
   box-sizing: border-box;
@@ -148,6 +149,11 @@ a {
 .card-items {
   margin-left: 8px;
   margin-right: 8px;
+  margin-bottom: 34px;
+}
+.card-items-lg {
+  margin-left: 22.5px;
+  margin-right: 22.5px;
   margin-bottom: 34px;
 }
 
@@ -395,7 +401,8 @@ select {
   margin-top: 21px;
 }
 
-.col-md-4:first-child > .card-items {
+.col-md-4:first-child > .card-items,
+.col-md-4:first-child > .card-items-lg {
   margin-left: 0px;
 }
 
@@ -497,7 +504,7 @@ select {
 }
 
 .detail-short-des,
-.detail-long-des {
+.detail-description {
   font-size: 18px;
   margin-top: 28px;
   white-space: pre-line;
@@ -510,6 +517,7 @@ select {
   font-size: 22px;
   line-height: 21px;
   padding: 18px 60px;
+  cursor: pointer;
 
   /* identical to box height */
   text-align: center;
@@ -524,7 +532,9 @@ select {
   font-weight: bold;
   font-size: 22px;
   line-height: 21px;
-
+  margin-bottom: 53px;
+  display: grid;
+  justify-content: center;
   color: #696969;
 }
 .detail-border-bottom {
@@ -532,6 +542,7 @@ select {
   width: 131px;
   background: #eb3f36;
   border-radius: 9px;
+  justify-self: center;
 }
 .nav-item.dropdown:hover > .dropdown-menu,
 .dropdown-menu:hover {
@@ -539,4 +550,16 @@ select {
 }
 .dropdown-item {
   font-family: Arial, Helvetica, sans-serif !important;
+}
+.detail-images-item:first-child {
+  margin-left: 0px !important;
+}
+.detail-images-item {
+  display: inline-block;
+  margin: 0px 7px;
+  border: 1px solid #f5f5f5;
+}
+.detail-images-box {
+  margin: 0px !important;
+  padding: 0px !important;
 }

@@ -66,11 +66,6 @@
             <span>Belanja</span>
           </a>
         </li>
-        <li class="nav-item nav-item-fullhigh">
-          <a class="nav-link nav-link-fh">
-            <span>baca-baca</span>
-          </a>
-        </li>
       </ul>
     </div>
   </div>
