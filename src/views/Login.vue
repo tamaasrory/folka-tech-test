@@ -55,7 +55,7 @@
                   </button>
                 </div>
               </div>
-              <router-link class="anchor text-lupa-password" to="/register"
+              <router-link class="anchor text-lupa-password" to="/"
                 >Lupa Password ?</router-link
               >
               <button type="submit" class="btn btn-primary">masuk</button>
