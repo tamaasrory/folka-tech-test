@@ -38,6 +38,7 @@
                 max="1000000"
                 v-model="filter.price[0]"
                 @input="slideOne()"
+                @change="loadData"
               />
               <input
                 type="range"
@@ -45,6 +46,7 @@
                 max="1000000"
                 v-model="filter.price[1]"
                 @input="slideTwo()"
+                @change="loadData"
               />
             </div>
           </div>
@@ -97,7 +99,11 @@
         >
           <div>
             <span class="fs-16px" style="margin-right: 14px">Menampilkan</span>
-            <select v-model="filter.limit" style="margin-right: 14px">
+            <select
+              v-model="filter.limit"
+              @change="loadData"
+              style="margin-right: 14px"
+            >
               <option value="12">12</option>
               <option value="24">24</option>
               <option value="36">36</option>
@@ -106,7 +112,7 @@
           </div>
           <div>
             <span class="fs-16px" style="margin-right: 14px">Urutkan</span>
-            <select v-model="filter.order">
+            <select v-model="filter.order" @change="loadData">
               <option value="date,DESC">Terbaru</option>
               <option value="product_name,ASC">Nama Produk</option>
               <option value="popular,DESC">Popularitas</option>
@@ -114,6 +120,9 @@
               <option value="price,DESC">Harga Tertinggi</option>
             </select>
           </div>
+        </div>
+        <div class="d-flex">
+          <div v-if="isLoading" class="lds-dual-ring my-5 mx-auto"></div>
         </div>
         <div class="row mx-0 px-0">
           <div v-for="(v, i) in datas" :key="i" class="col-md-4 px-0 product">
@@ -156,13 +165,27 @@
         </div>
         <div class="text-center pagination-container">
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-secondary">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              @click="nextPage(filter.page - 1)"
+            >
               <img :src="require('../assets/chevron-left.svg')" alt="" />
             </button>
-            <button type="button" class="btn btn-secondary">1</button>
-            <button type="button" class="btn btn-secondary">2</button>
-            <button type="button" class="btn btn-secondary">3</button>
-            <button type="button" class="btn btn-secondary">
+            <button
+              v-for="v in 3"
+              type="button"
+              class="btn btn-secondary"
+              :key="v"
+              @click="nextPage(v)"
+            >
+              {{ v }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              @click="nextPage(filter.page + 1)"
+            >
               <img :src="require('../assets/chevron-right.svg')" alt="" />
             </button>
           </div>
@@ -194,6 +217,7 @@ export default {
         layout_type: 'list_layout',
         status: 'active'
       },
+      isLoading: false,
       minGap: 0,
       sliderMaxValue: 1000000,
       sidebarItems: {
@@ -239,7 +263,13 @@ export default {
     this.loadData()
   },
   methods: {
-    slideOne: function () {
+    nextPage (v) {
+      if (v > 0) {
+        this.filter.page = v
+        this.loadData()
+      }
+    },
+    slideOne () {
       if (
         parseInt(this.filter.price[1]) - parseInt(this.filter.price[0]) <=
         this.minGap
@@ -248,7 +278,7 @@ export default {
       }
       this.fillColor()
     },
-    slideTwo: function () {
+    slideTwo () {
       if (
         parseInt(this.filter.price[1]) - parseInt(this.filter.price[0]) <=
         this.minGap
@@ -257,17 +287,23 @@ export default {
       }
       this.fillColor()
     },
-    fillColor: function () {
+    fillColor () {
       const percent1 = (this.filter.price[0] / this.sliderMaxValue) * 100
       const percent2 = (this.filter.price[1] / this.sliderMaxValue) * 100
       this.$refs.sliderTrack.style.background = `linear-gradient(to right, #757575 ${percent1}% , #EB3F36 ${percent1}% , #EB3F36 ${percent2}%, #757575 ${percent2}%)`
     },
     loadData () {
+      this.isLoading = true
       const query = new URLSearchParams(this.filter).toString()
       fetch(`https://api.lakkon.id/api/v1/products?${query}`)
         .then((response) => response.json())
         .then((response) => {
           this.datas = response.data
+          this.isLoading = false
+        })
+        .catch(() => {
+          this.datas = []
+          this.isLoading = false
         })
     },
     rupiah (number) {
@@ -288,4 +324,28 @@ export default {
 </script>
 
 <style scoped>
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #eb3f36;
+  border-color: #eb3f36 transparent #eb3f36 transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 </style>
