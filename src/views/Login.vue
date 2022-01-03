@@ -14,11 +14,20 @@
           <div class="card-header">Masuk</div>
           <div class="card-body">
             <div
-              class="alert alert-danger"
+              class="alert alert-danger alert-dismissible fade show"
               v-for="(error, index) in errors"
               :key="index"
             >
               {{ error[0] }}
+              <button
+                type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close"
+                @click="removeAlert(index)"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
             <form @submit.prevent="userLogin">
               <div class="form-group mb-25px">
@@ -86,8 +95,13 @@ export default {
           this.$router.push({ name: 'ProductList' })
         })
         .catch((error) => {
-          this.errors = error.response.data.errors
+          this.errors = error.response.data.data || { error: [error.response.data.message] }
         })
+    },
+    removeAlert (index) {
+      const tmp = JSON.parse(JSON.stringify(this.errors))
+      delete tmp[index]
+      this.errors = tmp
     }
   }
 }
